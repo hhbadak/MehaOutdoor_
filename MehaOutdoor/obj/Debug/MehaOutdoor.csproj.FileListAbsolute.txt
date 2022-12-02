@@ -6,3 +6,11 @@ C:\Users\DELL\source\repos\MehaOutdoor\MehaOutdoor\obj\Debug\MehaOutdoor.csproj.
 C:\Users\DELL\source\repos\MehaOutdoor\MehaOutdoor\obj\Debug\MehaOutdoor.csproj.CoreCompileInputs.cache
 C:\Users\DELL\source\repos\MehaOutdoor\MehaOutdoor\obj\Debug\MehaOutdoor.exe
 C:\Users\DELL\source\repos\MehaOutdoor\MehaOutdoor\obj\Debug\MehaOutdoor.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\bin\Debug\MehaOutdoor.exe.config
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\bin\Debug\MehaOutdoor.exe
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\bin\Debug\MehaOutdoor.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\obj\Debug\MehaOutdoor.csproj.AssemblyReference.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\obj\Debug\MehaOutdoor.csproj.SuggestedBindingRedirects.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\obj\Debug\MehaOutdoor.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\obj\Debug\MehaOutdoor.exe
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\MehaOutdoor\obj\Debug\MehaOutdoor.pdb

@@ -28,7 +28,7 @@ namespace MehaOutdoor
             markaEkle.Open();
             markaYaz.ExecuteNonQuery();
             markaEkle.Close();
-            return $"{id} {ad} {mensei}";
+            return $"";
         }
         public string markaGor()
         {

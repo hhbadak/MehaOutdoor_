@@ -17,6 +17,7 @@ namespace MehaOutdoor
             Satislar satis = new Satislar();
             Tedarikciler tedarik = new Tedarikciler();
             Urunler urun = new Urunler();
+            Personeller personel = new Personeller();
             #endregion
             Console.WriteLine("                                    M E H A  O U T D O O R");
             Console.WriteLine("1-Kullanıcı Profili Giriş");
@@ -95,26 +96,83 @@ namespace MehaOutdoor
                         }
                         else if (secenek == 3)
                         {
-
+                            while (secim == "e")
+                            {
+                                Console.WriteLine(tedarik.tedarikciEkle());
+                                Console.WriteLine("DEVAM ETMEK İSTER MİSİN? E/H");
+                                secim= Console.ReadLine();
+                                secim.ToLower();
+                                Console.Clear();
+                            }
                         }
                         else if (secenek == 4)
                         {
-
+                            while (secim == "e")
+                            {
+                                Console.WriteLine(personel.personelEkle());
+                                Console.WriteLine("DEVAM ETMEK İSTER MİSİN? E/H");
+                                secim = Console.ReadLine();
+                                secim.ToLower();
+                                Console.Clear();
+                            }
                         }
                         else if (secenek == 5)
                         {
-
+                            Console.WriteLine(tedarik.tedarikciEkle());
+                            Console.WriteLine("DEVAM ETMEK İSTER MİSİN? E/H");
+                            secim = Console.ReadLine();
+                            secim.ToLower();
+                            Console.Clear();
                         }
                         else if (secenek == 6)
                         {
-
+                            while (secim == "e")
+                            {
+                                Console.WriteLine(urun.urunEkle());
+                                Console.WriteLine("DEVAM ETMEK İSTER MİSİN? E/H");
+                                secim = Console.ReadLine();
+                                secim.ToLower();
+                                Console.Clear();
+                            }
                         }
 
 
                     }
                     else if (secenek == 2)
                     {
+                        Console.WriteLine("1-Personel Güncelleme");
+                        Console.WriteLine("2-Tedarikçi Güncelleme");
+                        Console.WriteLine("3-Ürün Güncelleme");
+                        secenek = Convert.ToInt32(Console.ReadLine());
+                        while (secenek < 1 || secenek > 3)
+                        {
+                            Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
+                            secenek = Convert.ToInt32(Console.ReadLine());
+                            Console.Clear();
+                        }
+                        if (secenek == 1)
+                        {
+                            Console.WriteLine("1-Ad");
+                            Console.WriteLine("2-Soyad");
+                            Console.WriteLine("3-Telefon");
+                            Console.WriteLine("4-Maaş");
+                            Console.WriteLine("Güncellemek İstediğiniz Numarayı Tuşlayınız");
+                            secenek = Convert.ToInt32(Console.ReadLine());
+                            while (secenek < 1 || secenek > 4)
+                            {
+                                Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
+                                secenek = Convert.ToInt32(Console.ReadLine());
+                                Console.Clear();
+                            }
+                        }
+                        if (secenek == 2)
+                        {
 
+                        }
+                        if (secenek == 3)
+                        {
+
+                        }
                     }
                     else if (secenek == 3)
                     {
@@ -128,12 +186,7 @@ namespace MehaOutdoor
             }
 
 
-            //Console.WriteLine(kategori.KategoriGor());
-            //string secim = "e";
-
-
-            ////Markalar marka = new Markalar();
-            ////Console.WriteLine(marka.markaEkle());
+            
         }
     }
 }
