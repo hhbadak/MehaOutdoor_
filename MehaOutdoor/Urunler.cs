@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
@@ -21,6 +22,18 @@ namespace MehaOutdoor
 
             Console.WriteLine("ID           Ad             ÜstKategori ID");
             Console.WriteLine("_____________________________________________");
+            urunYaz.CommandText = ("SELECT * FROM Kategoriler");
+            urunEkle.Open();
+            SqlDataReader reader = urunYaz.ExecuteReader();
+            while (reader.Read())
+            {
+                int uAd = reader.GetInt32(0);
+                string kAd = reader.GetString(1);
+                int mAd = reader.GetInt32(2);
+              
+                Console.WriteLine($"{uAd}\t{kAd}\t{mAd}");
+                Console.WriteLine("________________________________________________");
+            }
             urunYaz.CommandText = ("SELECT * FROM Kategoriler");
             Console.WriteLine("Kategori ID Giriniz");
             int id = Convert.ToInt32(Console.ReadLine());
@@ -103,7 +116,7 @@ namespace MehaOutdoor
             Console.WriteLine(urun.musteriUrunGor());
             Console.WriteLine("Almak İstediğiniz Ürün ID'sini Giriniz");
             secenek = Convert.ToInt32(Console.ReadLine());
-            while (secenek != uID )
+            while (secenek != uID)
             {
                 Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
                 secenek = Convert.ToInt32(Console.ReadLine());
@@ -116,8 +129,8 @@ namespace MehaOutdoor
             musteriUrunGor.Close();
             return "";
         }
-       
-            
-        
+
+
+
     }
 }
