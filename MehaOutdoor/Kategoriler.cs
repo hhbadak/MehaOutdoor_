@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace MehaOutdoor
         {
             SqlConnection kategoriGor = new SqlConnection(@"Data Source = DESKTOP-F78GTM3\SQLEXPRESS; Initial Catalog = Meha_Outdoor_DB; Integrated Security = True");
             SqlCommand kategoriGetir = kategoriGor.CreateCommand();
-            kategoriGetir.CommandText = "SELECT  Kategoriler.ID, Kategoriler.Ad, Kategoriler.Ad\r\nFROM Kategoriler";
+            kategoriGetir.CommandText = "SELECT Ka.Ad, K.Ad AS UstKategori FROM Kategoriler AS Ka\r\nJOIN Kategoriler AS K ON K.ID = Ka.AltKategori_ID";
             kategoriGor.Open();
             SqlDataReader reader = kategoriGetir.ExecuteReader();
             Console.WriteLine("ID      Kategori Adı     Üst Kategori Adı");
@@ -38,7 +39,8 @@ namespace MehaOutdoor
             Console.WriteLine("Kategori Adı Belirtiniz");
             string kategori = Console.ReadLine();
 
-            Console.WriteLine("Alt Kategori Belirtiniz");
+            kategoriYaz.CommandText = ("SELECT * FROM Kategoriler ");
+            Console.WriteLine("Üst Kategori Belirtiniz");
             int altKategori = Convert.ToInt32(Console.ReadLine());
 
             kategoriYaz.CommandText = $"INSERT INTO Kategoriler (Ad, AltKategori_ID) VALUES ('{kategori}', {altKategori})";

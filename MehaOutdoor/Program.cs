@@ -19,6 +19,8 @@ namespace MehaOutdoor
             Urunler urun = new Urunler();
             Personeller personel = new Personeller();
             #endregion
+
+            #region KULLANICI PROFİLİ
             Console.WriteLine("                                    M E H A  O U T D O O R");
             Console.WriteLine("1-Kullanıcı Profili Giriş");
             Console.WriteLine("2-Alışveriş Sayfası Giriş");
@@ -100,7 +102,7 @@ namespace MehaOutdoor
                             {
                                 Console.WriteLine(tedarik.tedarikciEkle());
                                 Console.WriteLine("DEVAM ETMEK İSTER MİSİN? E/H");
-                                secim= Console.ReadLine();
+                                secim = Console.ReadLine();
                                 secim.ToLower();
                                 Console.Clear();
                             }
@@ -152,41 +154,76 @@ namespace MehaOutdoor
                         }
                         if (secenek == 1)
                         {
-                            Console.WriteLine("1-Ad");
-                            Console.WriteLine("2-Soyad");
-                            Console.WriteLine("3-Telefon");
-                            Console.WriteLine("4-Maaş");
-                            Console.WriteLine("Güncellemek İstediğiniz Numarayı Tuşlayınız");
-                            secenek = Convert.ToInt32(Console.ReadLine());
-                            while (secenek < 1 || secenek > 4)
-                            {
-                                Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
-                                secenek = Convert.ToInt32(Console.ReadLine());
-                                Console.Clear();
-                            }
+                            Console.WriteLine(personel.personelGuncelle());
+                            Console.WriteLine("GÜNCELLEME BAŞARILI TEŞEKKÜRLER");
                         }
-                        if (secenek == 2)
-                        {
 
-                        }
-                        if (secenek == 3)
-                        {
-
-                        }
                     }
                     else if (secenek == 3)
                     {
+                        Console.WriteLine("1-Kategoriler");
+                        Console.WriteLine("2-Markalar");
+                        Console.WriteLine("3-Personeller");
+                        Console.WriteLine("4-Satışlar");
+                        Console.WriteLine("5-Tedarikçiler");
+                        Console.WriteLine("6-Ürünler");
 
+                        Console.WriteLine("GÖRÜNTÜLEMEK İSTEDİĞİNİZ TABLOYU SEÇİNİZ");
+                        secenek = Convert.ToInt32(Console.ReadLine());
+                        while (secenek < 1 || secenek > 6)
+                        {
+                            Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
+                            secenek = Convert.ToInt32(Console.ReadLine());
+                            Console.Clear();
+                        }
+                        if (secenek == 1)
+                        {
+                            Console.WriteLine(kategori.KategoriGor());
+                        }
+                        else if (secenek == 2)
+                        {
+                            Console.WriteLine(marka.markaGor());
+                        }
+                        else if (secenek == 3)
+                        {
+                            Console.WriteLine(personel.personelGor());
+                        }
+                        else if (secenek == 4)
+                        {
+                            Console.WriteLine(satis.satisGor());
+                        }
+                        else if (secenek == 5)
+                        {
+                            Console.WriteLine(tedarik.tedarikciGor());
+                        }
+                        else if (secenek == 6)
+                        {
+                            Console.WriteLine(urun.urunGor());
+                        }
                     }
                 }
+
+
+
             }
+            #endregion
+
+            #region MÜŞTERİ PROFİLİ
             else if (secenek == 2)
             {
-
+                Console.WriteLine("                                      |Hoşgeldiniz Sayın Müşterimiz|");
+                Console.WriteLine("                                      |____________________________|   ");
+                
+               
+                    
             }
+            #endregion
 
 
-            
+
+
+
+
         }
     }
 }

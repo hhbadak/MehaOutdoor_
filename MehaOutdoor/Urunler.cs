@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,11 +56,11 @@ namespace MehaOutdoor
             urunGetir.CommandText = "SELECT U.Ad,K.Ad,M.Ad,U.Aciklama,U.Fiyat,U.Stok,U.GuvenlikStogu FROM Urunler AS U\r\nJOIN Kategoriler AS K ON K.ID = U.Kategori_ID\r\nJOIN Markalar AS M ON M.ID = U.Marka_ID";
             urunGor.Open();
             SqlDataReader reader = urunGetir.ExecuteReader();
-            Console.WriteLine("Adı         Soyad            Telefon             Maaş");
-            Console.WriteLine("______________________________________________________________________________");
+            Console.WriteLine("Ürün Adı         Kategori Adı            Marka Adı             Açıklama          Fiyat       Stok        Güvenlik Stoğu");
+            Console.WriteLine("______________________________________________________________________________________________________________________________");
             while (reader.Read())
             {
-                string uAd=reader.GetString(0);
+                string uAd = reader.GetString(0);
                 string kAd = reader.GetString(1);
                 string mAd = reader.GetString(2);
                 string uAciklama = reader.GetString(3);
@@ -71,6 +72,52 @@ namespace MehaOutdoor
             }
             urunGor.Close();
             return "";
+
         }
+        public string musteriUrunGor()
+        {
+            SqlConnection musteriUrunGor = new SqlConnection(@"Data Source = DESKTOP-F78GTM3\SQLEXPRESS; Initial Catalog = Meha_Outdoor_DB; Integrated Security=True");
+            SqlCommand musteriUrunGetir = musteriUrunGor.CreateCommand();
+            musteriUrunGetir.CommandText = "SELECT U.ID,U.Ad,K.Ad,M.Ad,U.Aciklama,U.Fiyat,U.Stok FROM Urunler AS U\r\nJOIN Kategoriler AS K ON K.ID = U.Kategori_ID\r\nJOIN Markalar AS M ON M.ID = U.Marka_ID";
+            musteriUrunGor.Open();
+            SqlDataReader reader = musteriUrunGetir.ExecuteReader();
+            Console.WriteLine("Ürün ID         Ürün Adı         Kategori Adı            Marka Adı             Açıklama          Fiyat       Stok ");
+            Console.WriteLine("________________________________________________________________________________________________________________________");
+            int uID = reader.GetInt32(0);
+            int secenek = 0;
+            while (reader.Read())
+            {
+
+                uID = reader.GetInt32(0);
+                string uAd = reader.GetString(1);
+                string kAd = reader.GetString(2);
+                string mAd = reader.GetString(3);
+                string uAciklama = reader.GetString(4);
+                decimal uFiyat = reader.GetDecimal(5);
+                int uStok = reader.GetInt32(6);
+                int uGuvenlikStogu = reader.GetInt32(6);
+                Console.WriteLine($"{uAd}\t{kAd}\t{mAd}\t{uAciklama}\t{uFiyat}\t{uStok}\t{uGuvenlikStogu}");
+                Console.WriteLine("____________________________________________________________________________________________________");
+            }
+            Urunler urun = new Urunler();
+            Console.WriteLine(urun.musteriUrunGor());
+            Console.WriteLine("Almak İstediğiniz Ürün ID'sini Giriniz");
+            secenek = Convert.ToInt32(Console.ReadLine());
+            while (secenek != uID )
+            {
+                Console.WriteLine("YANLIŞ TUŞLAMA YAPTINIZ TEKRAR DENEYİNİZ");
+                secenek = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
+            }
+            if (true)
+            {
+
+            }
+            musteriUrunGor.Close();
+            return "";
+        }
+       
+            
+        
     }
 }

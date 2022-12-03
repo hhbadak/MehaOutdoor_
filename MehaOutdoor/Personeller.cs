@@ -97,7 +97,7 @@ namespace MehaOutdoor
                 personelGuncel.CommandText = $"UPDATE Personeller\r\nSET Maas={maaas}\r\nWHERE ID={personel};";
             }
            
-            personelGuncel.CommandText = $"UPDATE Personeller\r\nSET ContactName='Juan'\r\nWHERE ID={personel};";
+            
             return "";
         }
     }
