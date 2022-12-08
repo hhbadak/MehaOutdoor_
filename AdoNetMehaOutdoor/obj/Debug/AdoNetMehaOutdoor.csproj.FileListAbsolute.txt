@@ -1,0 +1,11 @@
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.exe.config
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.exe
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.pdb
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.AssemblyReference.cache
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.SuggestedBindingRedirects.cache
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.exe
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.pdb
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\bin\Debug\DataAccessLayer.dll
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\bin\Debug\DataAccessLayer.pdb
+C:\Users\DELL\source\repos\AdoNetMehaOutdoor\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.CopyComplete
