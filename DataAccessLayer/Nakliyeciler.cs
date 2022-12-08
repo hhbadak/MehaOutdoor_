@@ -12,5 +12,6 @@ namespace DataAccessLayer
         public string firmaAdi { get; set; }
         public string yetkili { get; set; }
         public string telefon { get; set; }
+        public string Aktif { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace DataAccessLayer
         public string fiyat { get; set; }
         public string stok { get; set; }
         public string guvenlikStogu { get; set; }
+        public string Aktif { get; set; }
 
     }
 }

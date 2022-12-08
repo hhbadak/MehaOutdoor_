@@ -50,8 +50,7 @@ namespace AdoNetMehaOutdoor
             {
                 Console.WriteLine("Ekleme İşlemi Başarısız.");
             }
-
-
+            
 
         }
     }

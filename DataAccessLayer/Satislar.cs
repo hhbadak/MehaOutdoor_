@@ -14,5 +14,6 @@ namespace DataAccessLayer
         public int adet { get; set; }
         public int kargo_ID { get; set; }
 
+
     }
 }

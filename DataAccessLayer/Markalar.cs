@@ -11,5 +11,6 @@ namespace DataAccessLayer
         public int ID { get; set; }
         public string Ad { get; set; }
         public string Mensei { get; set; }
+        public string Aktif { get; set; }
     }
 }
