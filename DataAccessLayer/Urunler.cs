@@ -13,10 +13,10 @@ namespace DataAccessLayer
         public int kategori_ID { get; set; }
         public int marka_ID { get; set; }
         public string aciklama { get; set; }
-        public string fiyat { get; set; }
-        public string stok { get; set; }
-        public string guvenlikStogu { get; set; }
-        public string Aktif { get; set; }
+        public decimal fiyat { get; set; }
+        public int stok { get; set; }
+        public int guvenlikStogu { get; set; }
+        public int Aktif { get; set; }
 
     }
 }

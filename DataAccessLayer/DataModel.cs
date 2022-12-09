@@ -241,15 +241,16 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool nakliyeGuncelle(int id) // bakılacak
+
+        public bool nakliyeSil(int id)
         {
-            //int noSecim = 0;
             try
             {
-                //cmd.CommandText = "UPDATE Nakliyeciler SET @sec WHERE ID = @id";
-                //cmd.Parameters.Clear();
-                //cmd.Parameters.AddWithValue("@sec",)
-
+                cmd.CommandText = "UPDATE Nakliyeciler SET Aktif = 0 WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                cmd.ExecuteNonQuery();
                 return true;
             }
             catch
@@ -258,13 +259,34 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool nakliyeSil(int id)
+        public bool nakliyeYetkiliGuncelle()
         {
+            Nakliyeciler n = new Nakliyeciler();
             try
             {
-                cmd.CommandText = "UPDATE Nakliyeciler SET Aktif = 0 WHERE ID=@id";
+                cmd.CommandText = "UPDATE Nakliyeciler SET Yetkili = @yetkili WHERE ID=@id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@yetkili", n.yetkili);
+                cmd.Parameters.AddWithValue("@id", n.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool nakliyeTelefonGuncelle()
+        {
+            Nakliyeciler n = new Nakliyeciler();
+            try
+            {
+                cmd.CommandText = "UPDATE Nakliyeciler SET Telefon = @telefon WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@telefon", n.telefon);
+                cmd.Parameters.AddWithValue("@id", n.ID);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -383,7 +405,414 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
+        public bool personelSil()
+        {
+            Personeller p = new Personeller();
+            try
+            {
+                cmd.CommandText = "UPDATE Personeller SET Aktif = 0 WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", p.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        #endregion
 
+        #region SATIŞ METOTLARI
+        public List<Satislar> satisListele()
+        {
+            List<Satislar> satis = new List<Satislar>();
+            List<Urunler> urun = new List<Urunler>();
+            List<Personeller> personel = new List<Personeller>();
+            List<Nakliyeciler> nakliye = new List<Nakliyeciler>();
+            try
+            {
+                cmd.CommandText = "SELECT S.ID,U.Ad,P.Ad,S.Adet,N.FirmaAdi FROM Satislar AS S JOIN Personeller AS P  ON P.ID = S.Personel_ID JOIN Urunler AS U ON U.ID = S.Urun_ID JOIN Nakliyeciler AS N ON N.ID=S.Kargo_ID";
+                cmd.Parameters.Clear();
+                con.Open();
+                SqlDataReader yazdir = cmd.ExecuteReader();
+                while (yazdir.Read())
+                {
+                    Satislar s = new Satislar();
+                    Urunler u = new Urunler();
+                    Personeller p = new Personeller();
+                    Nakliyeciler n = new Nakliyeciler();
+                    s.ID = yazdir.GetInt32(0);
+                    u.ad = yazdir.GetString(1);
+                    p.ad = yazdir.GetString(2);
+                    s.adet = yazdir.GetInt16(3);
+                    n.firmaAdi = yazdir.GetString(4);
+                    satis.Add(s);
+                    urun.Add(u);
+                    personel.Add(p);
+                    nakliye.Add(n);
+
+                }
+                return satis;
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally { con.Close(); }
+
+        }
+
+        #endregion
+
+        #region TEDARİKÇİ METOTLARI
+        public bool tedarikciEkle(Tedarikciler t)
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO Tedarikciler(Firma,Yetkili,Telefon,AlisFiyat,Aktif) VALUES(@firmadi,@yetkili,@telefon,@alisfiyat,1)";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@firmadi", t.firma);
+                cmd.Parameters.AddWithValue("@yetkili", t.yetkili);
+                cmd.Parameters.AddWithValue("@telefon", t.telefon);
+                cmd.Parameters.AddWithValue("@alisfiyat", t.alisFiyat);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public List<Tedarikciler> tedarikciListele()
+        {
+            List<Tedarikciler> tedarikci = new List<Tedarikciler>();
+            try
+            {
+                cmd.CommandText = "SELECT ID, Firma, Yetkili, Telefon, AlisFiyat FROM Tedarikciler";
+                cmd.Parameters.Clear();
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Tedarikciler t = new Tedarikciler();
+                    t.ID = reader.GetInt32(0);
+                    t.firma = reader.GetString(1);
+                    t.yetkili = reader.GetString(2);
+                    t.telefon = reader.GetString(3);
+                    t.alisFiyat = reader.GetDecimal(4);
+                    tedarikci.Add(t);
+                }
+                return tedarikci;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public bool tedarikciYetkiliGuncelleme()
+        {
+            Tedarikciler t = new Tedarikciler();
+            try
+            {
+                cmd.CommandText = "UPDATE Tedarikciler SET Yetkili = @yetkili WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@yetkili", t.yetkili);
+                cmd.Parameters.AddWithValue("@id", t.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool tedarikciTelefonGuncelleme()
+        {
+            Tedarikciler t = new Tedarikciler();
+            try
+            {
+                cmd.CommandText = "UPDATE Tedarikciler SET Telefon = @telefon WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@telefon", t.telefon);
+                cmd.Parameters.AddWithValue("@id", t.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool tedarikciAlisFiyatGuncelleme()
+        {
+            Tedarikciler t = new Tedarikciler();
+            try
+            {
+                cmd.CommandText = "UPDATE Tedarikciler SET AlisFiyat = @alis WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@alis", t.alisFiyat);
+                cmd.Parameters.AddWithValue("@id", t.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool tedarikciSil()
+        {
+            Tedarikciler t = new Tedarikciler();
+            try
+            {
+                cmd.CommandText = "UPDATE Tedarikciler SET Aktif = 0 WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", t.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        #endregion
+
+        #region ÜRÜN METOTLARI
+        public bool urunEkle(Urunler u)
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO Urunler(Ad,Kategori_ID,Marka_ID,Aciklama,Fiyat,Stok,GuvenlikStogu,Aktif) VALUES (@ad,@kategorid,@markaid,@aciklama,@fiyat,@stok,@gstok,1)";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ad", u.ad);
+                cmd.Parameters.AddWithValue("@kategorid", u.kategori_ID);
+                cmd.Parameters.AddWithValue("@markaid", u.marka_ID);
+                cmd.Parameters.AddWithValue("@aciklama", u.aciklama);
+                cmd.Parameters.AddWithValue("@fiyat", u.fiyat);
+                cmd.Parameters.AddWithValue("@stok", u.stok);
+                cmd.Parameters.AddWithValue("@gstok", u.guvenlikStogu);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public List<Urunler> urunListele()
+        {
+            List<Urunler> urun = new List<Urunler>();
+            List<Markalar> marka = new List<Markalar>();
+            List<Kategoriler> kategori = new List<Kategoriler>();
+
+            try
+            {
+                cmd.CommandText = "SELECT u.ID,u.Ad,k.Ad,m.Ad,u.Aciklama,u.Fiyat,u.Stok FROM Urunler AS U JOIN Markalar AS M ON m.ID=u.Marka_ID JOIN Kategoriler AS K ON K.ID = u.Kategori_ID";
+                cmd.Parameters.Clear();
+                con.Open();
+                SqlDataReader yazdir = cmd.ExecuteReader();
+                while (yazdir.Read())
+                {
+                    Urunler u = new Urunler();
+                    Markalar m = new Markalar();
+                    Kategoriler k = new Kategoriler();
+                    u.ID = yazdir.GetInt32(0);
+                    u.ad = yazdir.GetString(1);
+                    k.Ad = yazdir.GetString(2);
+                    m.Ad = yazdir.GetString(3);
+                    u.aciklama = yazdir.GetString(4);
+                    u.fiyat = yazdir.GetDecimal(5);
+                    u.stok = yazdir.GetInt32(6);
+                    urun.Add(u);
+                    marka.Add(m);
+                    kategori.Add(k);
+                }
+                return urun;
+            }
+            catch
+            {
+                return null;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunSil()
+        {
+            Urunler urun = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Aktif = 0 WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", urun.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunAdiGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Ad = @ad WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@alis", u.ad);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunKategoriGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Kategori_ID = @katid WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@katid", u.kategori_ID);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunMarkaGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Marka = @marka WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@marka", u.marka_ID);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunAciklamaGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Aciklama = @aciklama WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@aciklama", u.aciklama);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunFiyatGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Fiyat = @fiyat WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@fiyat", u.fiyat);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunStokGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET Stok = @stok WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@stok", u.stok);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool urunGstokGuncelle()
+        {
+            Urunler u = new Urunler();
+            try
+            {
+                cmd.CommandText = "UPDATE Urunler SET GuvenlikStogu = @gstok WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@gstok", u.guvenlikStogu);
+                cmd.Parameters.AddWithValue("@id", u.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
 
         #endregion
 

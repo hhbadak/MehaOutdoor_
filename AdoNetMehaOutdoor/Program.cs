@@ -13,44 +13,25 @@ namespace AdoNetMehaOutdoor
     {
         static void Main(string[] args)
         {
+            #region SINIF TANIMLAMA
             DataModel dm = new DataModel();
             Kategoriler k = new Kategoriler();
+            Markalar m = new Markalar();
+            Nakliyeciler n = new Nakliyeciler();
+            Personeller p = new Personeller();
+            Satislar s = new Satislar();
+            Tedarikciler t = new Tedarikciler();
+            Urunler u = new Urunler();
+            #endregion
+            Console.WriteLine("******************************************");
+            Console.WriteLine("*                                        *");
+            Console.WriteLine("*         M E H A  O U T D O O R         *");
+            Console.WriteLine("*                                        *");
+            Console.WriteLine("******************************************");
 
-            int noSecim = 0;
-            string yaziSecim = "";
 
-            Console.WriteLine("Lütfen Kategori Adını Giriniz");
-            yaziSecim = Console.ReadLine();
 
-            Console.Clear();
 
-            List<Kategoriler> kategori = dm.kategoriListele();
-
-            Console.WriteLine("ID           Kategori Adı            Alt Kategori ID");
-            Console.WriteLine("_______________________________________________________");
-
-            foreach (Kategoriler item in kategori)
-            {
-                Console.WriteLine($"{item.ID}-)     {item.Ad}   \t\t{item.AltKategori_ID}");
-                Console.WriteLine("__________________________________________________________");
-            }
-
-            Console.WriteLine("---------------------------");
-            Console.WriteLine("Lütfen üst Kategori Seçiniz");
-            noSecim = Convert.ToInt32(Console.ReadLine());
-
-            k.Ad = yaziSecim;
-            k.AltKategori_ID = noSecim;
-
-            if (dm.kategoriEkle(k))
-            {
-                Console.WriteLine("Ekleme İşlemi Başarılı");
-            }
-            else
-            {
-                Console.WriteLine("Ekleme İşlemi Başarısız.");
-            }
-            
 
         }
     }
