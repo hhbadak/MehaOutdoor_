@@ -10,3 +10,9 @@ C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\D
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\DataAccessLayer\bin\Debug\DataAccessLayer.dll
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

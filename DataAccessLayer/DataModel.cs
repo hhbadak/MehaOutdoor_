@@ -241,9 +241,9 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool nakliyeGuncelle(int id)
+        public bool nakliyeGuncelle(int id) // bakılacak
         {
-            int noSecim = 0;
+            //int noSecim = 0;
             try
             {
                 //cmd.CommandText = "UPDATE Nakliyeciler SET @sec WHERE ID = @id";
@@ -258,6 +258,133 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
+        public bool nakliyeSil(int id)
+        {
+            try
+            {
+                cmd.CommandText = "UPDATE Nakliyeciler SET Aktif = 0 WHERE ID=@id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        #endregion
+
+        #region PERSONEL METOTLARI
+        public bool personelEkle(Personeller p)
+        {
+            try
+            {
+                Personeller personel = new Personeller();
+                cmd.CommandText = "INSERT INTO Personeller(Ad,Soyad,Telefon,Maas,Aktif) VALUES (@ad,@soyAd,@telefon,@maas,1)";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ad", personel.ad);
+                cmd.Parameters.AddWithValue("@soyAd", personel.soyAd);
+                cmd.Parameters.AddWithValue("@telefon", personel.telefon);
+                cmd.Parameters.AddWithValue("@maas", personel.maas);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public List<Personeller> personelListele()
+        {
+            List<Personeller> personel = new List<Personeller>();
+            try
+            {
+                cmd.CommandText = "SELECT ID,Ad,Soyad,Telefon,Maas FROM Personeller";
+                cmd.Parameters.Clear();
+                con.Open();
+                SqlDataReader yazdir = cmd.ExecuteReader();
+                while (yazdir.Read())
+                {
+                    Personeller p = new Personeller();
+                    p.ID = yazdir.GetInt32(0);
+                    p.ad = yazdir.GetString(1);
+                    p.soyAd = yazdir.GetString(2);
+                    p.telefon = yazdir.GetString(3);
+                    p.maas = yazdir.GetDecimal(4);
+                    personel.Add(p);
+                }
+                return personel;
+            }
+            catch
+            {
+                return null;
+            }
+            finally { con.Close(); }
+        }
+        public bool personelMaasGuncelleme()
+        {
+            Personeller p = new Personeller();
+            try
+            {
+                cmd.CommandText = "UPDATE Personeller SET Maas = @maas WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@maas", p.maas);
+                cmd.Parameters.AddWithValue("@id", p.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool personelSoyAdGuncelleme()
+        {
+            Personeller p = new Personeller();
+            try
+            {
+                cmd.CommandText = "UPDATE Personeller SET Soyad = @soyad WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@soyad", p.soyAd);
+                cmd.Parameters.AddWithValue("@id", p.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public bool personelTelefonGuncelleme()
+        {
+            Personeller p = new Personeller();
+            try
+            {
+                cmd.CommandText = "UPDATE Personeller SET Telefon = @telefon WHERE ID = @ id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@telefon", p.telefon);
+                cmd.Parameters.AddWithValue("@id", p.ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+
+
         #endregion
 
     }
