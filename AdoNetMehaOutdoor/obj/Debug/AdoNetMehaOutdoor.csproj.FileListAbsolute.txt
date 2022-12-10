@@ -20,3 +20,14 @@ C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.CopyComplete
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.exe
 C:\Users\HsnHs\OneDrive\Belgeler\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.exe.config
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.exe
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\bin\Debug\AdoNetMehaOutdoor.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\bin\Debug\DataAccessLayer.dll
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\bin\Debug\DataAccessLayer.pdb
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.AssemblyReference.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.SuggestedBindingRedirects.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.csproj.CopyComplete
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.exe
+C:\Users\DELL\Documents\GitHub\MehaOutdoor_\AdoNetMehaOutdoor\obj\Debug\AdoNetMehaOutdoor.pdb

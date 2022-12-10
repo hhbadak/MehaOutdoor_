@@ -13,6 +13,6 @@ namespace DataAccessLayer
         public string soyAd { get; set; }
         public string telefon { get; set; }
         public decimal maas { get; set; }
-        public string Aktif { get; set; }
+        public int Aktif { get; set; }
     }
 }

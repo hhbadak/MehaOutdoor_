@@ -47,7 +47,7 @@ namespace DataAccessLayer
             List<Kategoriler> kategori = new List<Kategoriler>();
             try
             {
-                cmd.CommandText = "SELECT Kategoriler.ID,Kategoriler.Ad,Kategoriler.AltKategori_ID=Ad FROM Kategoriler";
+                cmd.CommandText = "SELECT Kategoriler.ID,Kategoriler.Ad,Kategoriler.AltKategori_ID FROM Kategoriler";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -111,14 +111,14 @@ namespace DataAccessLayer
             finally { con.Close(); }
 
         }
-        public bool kategoriDegistir(string ad, int id)
+        public bool kategoriDegistir(Kategoriler k)
         {
             try
             {
                 cmd.CommandText = "UPDATE Kategoriler SET Ad=@ad WHERE ID=@id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@ad", ad);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", k.ID);
+                cmd.Parameters.AddWithValue("@ad", k.Ad);
                 return true;
             }
             catch
@@ -135,10 +135,9 @@ namespace DataAccessLayer
         {
             try
             {
-                cmd.CommandText = "INSERT INTO Markalar(Ad,Mensei,Aktif) VALUES ('@ad','@mensei',1)";
+                cmd.CommandText = "INSERT INTO Markalar(Ad,Aktif) VALUES (@ad,1)";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ad", m.Ad);
-                cmd.Parameters.AddWithValue("@mensei", m.Mensei);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -171,7 +170,7 @@ namespace DataAccessLayer
             List<Markalar> marka = new List<Markalar>();
             try
             {
-                cmd.CommandText = "SELECT ID,Ad,Mensei FROM Markalar";
+                cmd.CommandText = "SELECT ID,Ad FROM Markalar";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -180,7 +179,6 @@ namespace DataAccessLayer
                     Markalar m = new Markalar();
                     m.ID = yazdir.GetInt32(0);
                     m.Ad = yazdir.GetString(1);
-                    m.Mensei = yazdir.GetString(2);
                     marka.Add(m);
                 }
                 return marka;
@@ -194,7 +192,7 @@ namespace DataAccessLayer
         #endregion
 
         #region NAKLİYE METOTLARI
-        DataModel dm = new DataModel();
+        
 
         public bool nakliyeEkle(Nakliyeciler n)
         {
@@ -259,10 +257,9 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool nakliyeYetkiliGuncelle()
+        public bool nakliyeYetkiliGuncelle(Nakliyeciler n)
         {
-            Nakliyeciler n = new Nakliyeciler();
-            try
+           try
             {
                 cmd.CommandText = "UPDATE Nakliyeciler SET Yetkili = @yetkili WHERE ID=@id";
                 cmd.Parameters.Clear();
@@ -278,9 +275,8 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool nakliyeTelefonGuncelle()
+        public bool nakliyeTelefonGuncelle(Nakliyeciler n)
         {
-            Nakliyeciler n = new Nakliyeciler();
             try
             {
                 cmd.CommandText = "UPDATE Nakliyeciler SET Telefon = @telefon WHERE ID=@id";
@@ -304,13 +300,12 @@ namespace DataAccessLayer
         {
             try
             {
-                Personeller personel = new Personeller();
                 cmd.CommandText = "INSERT INTO Personeller(Ad,Soyad,Telefon,Maas,Aktif) VALUES (@ad,@soyAd,@telefon,@maas,1)";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@ad", personel.ad);
-                cmd.Parameters.AddWithValue("@soyAd", personel.soyAd);
-                cmd.Parameters.AddWithValue("@telefon", personel.telefon);
-                cmd.Parameters.AddWithValue("@maas", personel.maas);
+                cmd.Parameters.AddWithValue("@ad", p.ad);
+                cmd.Parameters.AddWithValue("@soyAd", p.soyAd);
+                cmd.Parameters.AddWithValue("@telefon", p.telefon);
+                cmd.Parameters.AddWithValue("@maas", p.maas);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -348,9 +343,8 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool personelMaasGuncelleme()
+        public bool personelMaasGuncelleme(Personeller p)
         {
-            Personeller p = new Personeller();
             try
             {
                 cmd.CommandText = "UPDATE Personeller SET Maas = @maas WHERE ID = @ id";
