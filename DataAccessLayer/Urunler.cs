@@ -14,6 +14,7 @@ namespace DataAccessLayer
         public int marka_ID { get; set; }
         public string aciklama { get; set; }
         public decimal fiyat { get; set; }
+        public int adet { get; set; }
         public int stok { get; set; }
         public int guvenlikStogu { get; set; }
         public int Aktif { get; set; }

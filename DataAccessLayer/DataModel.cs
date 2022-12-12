@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccessLayer.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace DataAccessLayer
             List<Kategoriler> kategori = new List<Kategoriler>();
             try
             {
-                cmd.CommandText = "SELECT Kategoriler.ID,Kategoriler.Ad,Kategoriler.AltKategori_ID FROM Kategoriler";
+                cmd.CommandText = "SELECT ID,Ad,AltKategori_ID FROM Kategoriler WHERE Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -99,9 +100,11 @@ namespace DataAccessLayer
         {
             try
             {
-                cmd.CommandText = "UPDATE Kategoriler SET Aktif = 0 ";
+                cmd.CommandText = "UPDATE Kategoriler SET Aktif = 0 WHERE ID = @id";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                cmd.ExecuteNonQuery();
                 return true;
             }
             catch
@@ -119,6 +122,8 @@ namespace DataAccessLayer
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", k.ID);
                 cmd.Parameters.AddWithValue("@ad", k.Ad);
+                con.Open();
+                cmd.ExecuteNonQuery();
                 return true;
             }
             catch
@@ -150,13 +155,13 @@ namespace DataAccessLayer
         }
         public bool markaSil(int id)
         {
-            DataModel dm = new DataModel();
             try
             {
-                Markalar m = new Markalar();
                 cmd.CommandText = "UPDATE Markalar SET Aktif = 0 WHERE ID = @id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", m.ID);
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                cmd.ExecuteNonQuery();
                 return true;
             }
             catch
@@ -170,7 +175,7 @@ namespace DataAccessLayer
             List<Markalar> marka = new List<Markalar>();
             try
             {
-                cmd.CommandText = "SELECT ID,Ad FROM Markalar";
+                cmd.CommandText = "SELECT ID,Ad FROM Markalar WHERE Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -192,7 +197,7 @@ namespace DataAccessLayer
         #endregion
 
         #region NAKLİYE METOTLARI
-        
+
 
         public bool nakliyeEkle(Nakliyeciler n)
         {
@@ -218,7 +223,7 @@ namespace DataAccessLayer
             List<Nakliyeciler> nakliye = new List<Nakliyeciler>();
             try
             {
-                cmd.CommandText = "SELECT ID,FirmaAdi,Yetkili,Telefon FROM Nakliyeciler";
+                cmd.CommandText = "SELECT ID,FirmaAdi,Yetkili,Telefon FROM Nakliyeciler WHERE Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -239,12 +244,36 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
+        public List<Nakliyeciler> musteriNakliyeListele()
+        {
+            List<Nakliyeciler> nakliye = new List<Nakliyeciler>();
+            try
+            {
+                cmd.CommandText = "SELECT ID,FirmaAdi FROM Nakliyeciler WHERE Aktif = 1";
+                cmd.Parameters.Clear();
+                con.Open();
+                SqlDataReader yazdir = cmd.ExecuteReader();
+                while (yazdir.Read())
+                {
+                    Nakliyeciler n = new Nakliyeciler();
+                    n.ID = yazdir.GetInt32(0);
+                    n.firmaAdi = yazdir.GetString(1);
+                    nakliye.Add(n);
+                }
+                return nakliye;
+            }
+            catch
+            {
+                return null;
+            }
+            finally { con.Close(); }
+        }
 
         public bool nakliyeSil(int id)
         {
             try
             {
-                cmd.CommandText = "UPDATE Nakliyeciler SET Aktif = 0 WHERE ID=@id";
+                cmd.CommandText = "UPDATE Nakliyeciler SET Aktif = 0 WHERE ID = @id";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
@@ -259,7 +288,7 @@ namespace DataAccessLayer
         }
         public bool nakliyeYetkiliGuncelle(Nakliyeciler n)
         {
-           try
+            try
             {
                 cmd.CommandText = "UPDATE Nakliyeciler SET Yetkili = @yetkili WHERE ID=@id";
                 cmd.Parameters.Clear();
@@ -321,7 +350,7 @@ namespace DataAccessLayer
             List<Personeller> personel = new List<Personeller>();
             try
             {
-                cmd.CommandText = "SELECT ID,Ad,Soyad,Telefon,Maas FROM Personeller";
+                cmd.CommandText = "SELECT ID,Ad,Soyad,Telefon,Maas FROM Personeller WHERE Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
@@ -347,7 +376,7 @@ namespace DataAccessLayer
         {
             try
             {
-                cmd.CommandText = "UPDATE Personeller SET Maas = @maas WHERE ID = @ id";
+                cmd.CommandText = "UPDATE Personeller SET Maas = @maas WHERE ID = @id";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@maas", p.maas);
                 cmd.Parameters.AddWithValue("@id", p.ID);
@@ -361,9 +390,8 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool personelSoyAdGuncelleme()
+        public bool personelSoyAdGuncelleme(Personeller p)
         {
-            Personeller p = new Personeller();
             try
             {
                 cmd.CommandText = "UPDATE Personeller SET Soyad = @soyad WHERE ID = @ id";
@@ -399,14 +427,14 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool personelSil()
+        public bool personelSil(int id)
         {
             Personeller p = new Personeller();
             try
             {
                 cmd.CommandText = "UPDATE Personeller SET Aktif = 0 WHERE ID=@id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", p.ID);
+                cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -459,7 +487,47 @@ namespace DataAccessLayer
             finally { con.Close(); }
 
         }
-
+        public bool satisEkle(Satislar s)
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO Satislar(Urun_ID,Personel_ID,Adet,Kargo_ID) VALUES (@uid,2,@adet,@kid)";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@uid", s.urun_ID);
+                cmd.Parameters.AddWithValue("@adet", s.adet);
+                cmd.Parameters.AddWithValue("@kid", s.kargo_ID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+        public DataList satisUrunGetir(int id)
+        {
+            try
+            {
+                cmd.CommandText = "SELECT Ad FROM Urunler WHERE ID = @id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                SqlDataReader yazdir = cmd.ExecuteReader();
+                DataList u = new DataList();
+                while (yazdir.Read())
+                {
+                    u.urun.ad = yazdir.GetString(0);
+                }
+                return u;
+            }
+            catch
+            {
+                return null;
+            }
+            finally { con.Close(); }
+        }
         #endregion
 
         #region TEDARİKÇİ METOTLARI
@@ -491,7 +559,7 @@ namespace DataAccessLayer
             List<Tedarikciler> tedarikci = new List<Tedarikciler>();
             try
             {
-                cmd.CommandText = "SELECT ID, Firma, Yetkili, Telefon, AlisFiyat FROM Tedarikciler";
+                cmd.CommandText = "SELECT ID, Firma, Yetkili, Telefon FROM Tedarikciler WHERE Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -502,7 +570,6 @@ namespace DataAccessLayer
                     t.firma = reader.GetString(1);
                     t.yetkili = reader.GetString(2);
                     t.telefon = reader.GetString(3);
-                    t.alisFiyat = reader.GetDecimal(4);
                     tedarikci.Add(t);
                 }
                 return tedarikci;
@@ -573,14 +640,13 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool tedarikciSil()
+        public bool tedarikciSil(int id)
         {
-            Tedarikciler t = new Tedarikciler();
             try
             {
-                cmd.CommandText = "UPDATE Tedarikciler SET Aktif = 0 WHERE ID=@id";
+                cmd.CommandText = "UPDATE Tedarikciler SET Aktif = 0 WHERE ID = @id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", t.ID);
+                cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -620,35 +686,27 @@ namespace DataAccessLayer
                 con.Close();
             }
         }
-        public List<Urunler> urunListele()
+        public List<DataList> urunListele()
         {
-            List<Urunler> urun = new List<Urunler>();
-            List<Markalar> marka = new List<Markalar>();
-            List<Kategoriler> kategori = new List<Kategoriler>();
-
+            List<DataList> d = new List<DataList>();
             try
             {
-                cmd.CommandText = "SELECT u.ID,u.Ad,k.Ad,m.Ad,u.Aciklama,u.Fiyat,u.Stok FROM Urunler AS U JOIN Markalar AS M ON m.ID=u.Marka_ID JOIN Kategoriler AS K ON K.ID = u.Kategori_ID";
+                cmd.CommandText = "SELECT u.ID,u.Ad,k.Ad,m.Ad,u.Aciklama,u.Fiyat,u.Stok FROM Urunler AS U JOIN Markalar AS M ON m.ID=u.Marka_ID JOIN Kategoriler AS K ON K.ID = u.Kategori_ID WHERE U.Aktif = 1";
                 cmd.Parameters.Clear();
                 con.Open();
                 SqlDataReader yazdir = cmd.ExecuteReader();
                 while (yazdir.Read())
                 {
-                    Urunler u = new Urunler();
-                    Markalar m = new Markalar();
-                    Kategoriler k = new Kategoriler();
-                    u.ID = yazdir.GetInt32(0);
-                    u.ad = yazdir.GetString(1);
-                    k.Ad = yazdir.GetString(2);
-                    m.Ad = yazdir.GetString(3);
-                    u.aciklama = yazdir.GetString(4);
-                    u.fiyat = yazdir.GetDecimal(5);
-                    u.stok = yazdir.GetInt32(6);
-                    urun.Add(u);
-                    marka.Add(m);
-                    kategori.Add(k);
+                    DataList dt = new DataList();
+                    dt.urun.ID = yazdir.GetInt32(0);
+                    dt.urun.ad = yazdir.GetString(1);
+                    dt.kategori.Ad = yazdir.GetString(2);
+                    dt.marka.Ad = yazdir.GetString(3);
+                    dt.urun.aciklama = yazdir.GetString(4);
+                    dt.urun.fiyat = yazdir.GetDecimal(5);
+                    d.Add(dt);
                 }
-                return urun;
+                return d;
             }
             catch
             {
@@ -656,14 +714,14 @@ namespace DataAccessLayer
             }
             finally { con.Close(); }
         }
-        public bool urunSil()
+        public bool urunSil(int id)
         {
             Urunler urun = new Urunler();
             try
             {
                 cmd.CommandText = "UPDATE Urunler SET Aktif = 0 WHERE ID=@id";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", urun.ID);
+                cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 return true;
@@ -703,8 +761,8 @@ namespace DataAccessLayer
                 cmd.Parameters.AddWithValue("@katid", u.kategori_ID);
                 cmd.Parameters.AddWithValue("@id", u.ID);
                 con.Open();
-                cmd.ExecuteNonQuery();
-                return true;
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
             }
             catch
             {
